@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>gd.net - Geometry Dash 2.208 & Geode</title>
+    <!-- Google Fonts & FontAwesome for Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #050b0a;
+            --card-bg: #0d1a18;
+            --neon-green: #00ff88;
+            --neon-cyan: #00f0ff;
+            --glow-green: rgba(0, 255, 136, 0.4);
+            --text-main: #ffffff;
+            --text-muted: #8ab8b0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 50% 15%, rgba(0, 240, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 50% 70%, rgba(0, 255, 136, 0.08) 0%, transparent 60%);
+            min-height: 100vh;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            border-bottom: 1px solid rgba(0, 255, 136, 0.15);
+            background: rgba(5, 11, 10, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--text-main);
+            text-decoration: none;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px var(--glow-green);
+        }
+
+        .logo span {
+            color: var(--neon-green);
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: 600;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--neon-green);
+            text-shadow: 0 0 8px var(--glow-green);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 80px 20px 40px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            background: linear-gradient(45deg, var(--neon-green), var(--neon-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(0, 255, 136, 0.2);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 40px 30px;
+            text-align: center;
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), inset 0 0 15px rgba(0, 255, 136, 0.03);
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--neon-green);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9), 0 0 20px var(--glow-green);
+        }
+
+        .card i {
+            font-size: 3rem;
+            color: var(--neon-green);
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 10px var(--glow-green));
+        }
+
+        .card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+
+        .card .version {
+            display: inline-block;
+            background: rgba(0, 255, 136, 0.1);
+            color: var(--neon-green);
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .download-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--neon-green), var(--neon-cyan));
+            color: #050b0a;
+            text-decoration: none;
+            padding: 14px 20px;
+            border-radius: 8px;
+            font-weight: 800;
+            box-shadow: 0 0 15px var(--glow-green);
+            transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            opacity: 0.95;
+            transform: scale(1.02);
+            box-shadow: 0 0 25px rgba(0, 255, 136, 0.8);
+        }
+
+        .btn-secondary {
+            background: rgba(0, 255, 136, 0.05);
+            color: var(--neon-green);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            box-shadow: none;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 255, 136, 0.15);
+            box-shadow: 0 0 10px var(--glow-green);
+        }
+
+        footer {
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(0, 255, 136, 0.15);
+            margin-top: 60px;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo">gd<span>.net</span></a>
+        <nav>
+            <a href="#downloads">Downloads</a>
+            <a href="https://geode-sdk.org/" target="_blank">Geode Docs</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Geometry Dash 2.208 & Geode</h1>
+        <p>Get the latest Geometry Dash 2.208 and enhance your gameplay with the official Geode Mod Loader.</p>
+    </section>
+
+    <div class="container" id="downloads">
+        <!-- Geometry Dash Card -->
+        <div class="card">
+            <i class="fa-solid fa-cube"></i>
+            <h2>Geometry Dash</h2>
+            <span class="version">Version 2.208</span>
+            <p>The rhythm-based action platforming masterpiece. Jump, fly, and flip your way through dangerous passages and spiky obstacles.</p>
+            <div class="download-options">
+                <a href="https://github.com/Classic2010/GeoDash-2.208/releases/tag/release" class="btn"><i class="fa-brands fa-windows"></i> Download for Windows</a>
+                <a href="https://www.mediafire.com/file/c9k1ka0bx2rxs6x/Geometry_Dash_2.2081.apk/file" class="btn btn-secondary"><i class="fa-brands fa-android"></i> Download APK (Android)</a>
+            </div>
+        </div>
+
+        <!-- Geode Mod Loader Card -->
+        <div class="card">
+            <i class="fa-solid fa-puzzle-piece"></i>
+            <h2>Geode Mod Loader</h2>
+            <span class="version">Latest Stable</span>
+            <p>The ultimate fan-made extension for Geometry Dash. Seamlessly install mods, tweak settings, and play with custom features.</p>
+            <div class="download-options">
+                <a href="https://geode-sdk.org/install" target="_blank" class="btn"><i class="fa-solid fa-download"></i> Official Installer</a>
+                <a href="https://github.com/geode-sdk/geode" target="_blank" class="btn btn-secondary"><i class="fa-brands fa-github"></i> GitHub Source</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 gd.net. GD By Roptop , web made by 7a11 groups like : Binh minh , loki , harry , AERO2010GDVN , TMY ,... MEDIAFIRE AND GITHUB .Thank to (EGO)Icez, TLM , vietchaygogd , ... ,and you.</p>
+    </footer>
+
+</body>
+</html>
